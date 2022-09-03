@@ -1,0 +1,11 @@
+{
+  "name": "chesskhelo.in-be",
+  "version": "1.0.0",
+  "description": "Backend for chesskhelo.in",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adarsh Bhadauria",
+  "license": "ISC"
+}
