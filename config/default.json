@@ -1,0 +1,12 @@
+{
+  "port": "",
+  "mongoUrl": "",
+  "accessToken": "",
+  "serviceName": "",
+  "logDir": "/var/log/adxy",
+  "timezone": "",
+  "headers": {
+    "correlationId": "X-Correlation-Id",
+    "authorization": "Authorization"
+  }
+}

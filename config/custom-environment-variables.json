@@ -1,0 +1,7 @@
+{
+  "port": "PORT",
+  "accessToken": "ACCESS_TOKEN",
+  "mongoUrl": "MONGO_URL",
+  "serviceName": "SERVICE_NAME",
+  "timezone": "TIMEZONE"
+}
