@@ -7,12 +7,14 @@ const config = require('config');
 const boolParser = require('express-query-boolean');
 const express = require('express');
 const gracefulShutdown = require('http-graceful-shutdown');
+const socketio = require('socket.io');
 
 const logger = require('utils/logger');
 const winstonLogger = require('utils/winstonLogger');
 const clsify = require('middlewares/clsify');
 const correlationIdBinder = require('middlewares/correlationIdBinder');
 const responseHandlers = require('middlewares/response');
+const socketsAuth = require('middlewares/sockets');
 const routes = require('routes');
 
 const app = express();
@@ -46,8 +48,18 @@ app.use((err, req, res, next) => {
   res.failure({});
 });
 
-const server = app.listen(app.get('port'), () => {
-  logger.info(`Server started. Listening on port ${app.get('port')}`);
+const server = app.listen(app.get('port'), () =>
+  logger.info(`Server started. Listening on port ${app.get('port')}`)
+);
+
+const io = socketio(server, { path: '/v1/sockets' });
+
+io.use(socketsAuth);
+
+io.on('connection', (socket) => {
+  console.log('Connected');
+
+  socket.on('disconnect', () => console.log('Disconnected'));
 });
 
 const shutdownCleanup = async (signal) => {
