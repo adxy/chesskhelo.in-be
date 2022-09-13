@@ -11,13 +11,19 @@ const socketio = require('socket.io');
 
 const logger = require('utils/logger');
 const winstonLogger = require('utils/winstonLogger');
+const { handleSocketEvents } = require('services/socketEvents');
 const clsify = require('middlewares/clsify');
 const correlationIdBinder = require('middlewares/correlationIdBinder');
 const responseHandlers = require('middlewares/response');
-const socketsAuth = require('middlewares/sockets');
+const { socketsAuthorization } = require('middlewares/auth.js');
 const routes = require('routes');
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+  const cors = require('utils/cors');
+  app.use(cors);
+}
 
 app.set('port', config.get('port'));
 
@@ -52,14 +58,20 @@ const server = app.listen(app.get('port'), () =>
   logger.info(`Server started. Listening on port ${app.get('port')}`)
 );
 
-const io = socketio(server, { path: '/v1/sockets' });
+const io = socketio(server, {
+  path: '/v1/sockets',
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Authorization'],
+    credentials: true,
+  },
+});
 
-io.use(socketsAuth);
+io.use(socketsAuthorization);
 
 io.on('connection', (socket) => {
-  console.log('Connected');
-
-  socket.on('disconnect', () => console.log('Disconnected'));
+  handleSocketEvents({ socket });
 });
 
 const shutdownCleanup = async (signal) => {

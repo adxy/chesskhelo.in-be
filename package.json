@@ -4,6 +4,7 @@
   "description": "Backend for chesskhelo.in",
   "main": "src/server.js",
   "scripts": {
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Adarsh Bhadauria",
@@ -17,12 +18,18 @@
     "express": "^4.18.1",
     "express-async-errors": "^3.1.1",
     "express-query-boolean": "^2.0.0",
+    "google-auth-library": "^8.5.1",
     "http-graceful-shutdown": "^3.1.8",
+    "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.37",
     "mongoose": "^6.5.4",
     "socket.io": "^4.5.2",
     "verror": "^1.10.1",
     "winston": "^3.8.1",
     "winston-daily-rotate-file": "^4.7.1"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "nodemon": "^2.0.19"
   }
 }

@@ -8,5 +8,8 @@
   "headers": {
     "correlationId": "X-Correlation-Id",
     "authorization": "Authorization"
-  }
+  },
+  "accessJwtSecret": "",
+  "refreshJwtSecret": "",
+  "googleClientId": ""
 }

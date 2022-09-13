@@ -3,5 +3,8 @@
   "accessToken": "ACCESS_TOKEN",
   "mongoUrl": "MONGO_URL",
   "serviceName": "SERVICE_NAME",
-  "timezone": "TIMEZONE"
+  "timezone": "TIMEZONE",
+  "accessJwtSecret": "ACCESS_JWT_SECRET",
+  "refreshJwtSecret": "REFRESH_JWT_SECRET",
+  "googleClientId": "GOOGLE_SSO_CLIENT_ID"
 }

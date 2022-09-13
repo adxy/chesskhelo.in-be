@@ -1,12 +1,51 @@
 require('dotenv-safe').config();
 const config = require('config');
+const jwt = require('jsonwebtoken');
+
+const { parseCookie } = require('utils/commonFunctions');
+const { error } = require('utils/logger');
 
 module.exports = {
   authenticate: async (req, res, next) => {
-    if (req.header('Authorization') === config.get('accessToken')) {
-      next();
-      return;
+    const accessToken = req.header(config.get('headers.authorization'));
+    if (!accessToken) {
+      return res.unauthorized({});
     }
-    res.unauthorized({});
+    try {
+      const data = jwt.verify(accessToken, config.get('accessJwtSecret'));
+      req.userId = data.userId;
+      return next();
+    } catch {
+      return res.unauthorized({});
+    }
   },
+
+  authenticateByCookie: async (req, res, next) => {
+    const { ck_refresh_token: refreshToken } = parseCookie({ cookieString: req.headers.cookie });
+
+    if (!refreshToken) {
+      return res.unauthorized({});
+    }
+    try {
+      const data = jwt.verify(refreshToken, config.get('refreshJwtSecret'));
+      req.userId = data.userId;
+      req.refreshToken = refreshToken;
+      return next();
+    } catch (e) {
+      return res.unauthorized({});
+    }
+  },
+
+  socketsAuthorization: (async = (socket, next) => {
+    const accessToken = socket.handshake.query.token;
+    if (!accessToken) {
+      return res.unauthorized({});
+    }
+    try {
+      jwt.verify(accessToken, config.get('accessJwtSecret'));
+      return next();
+    } catch {
+      return res.unauthorized({});
+    }
+  }),
 };
