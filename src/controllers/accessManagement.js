@@ -1,5 +1,4 @@
 const { error } = require('utils/logger');
-const { parseCookie } = require('utils/commonFunctions');
 const accessManagementService = require('services/accessManagement');
 
 module.exports = {

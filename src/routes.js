@@ -6,6 +6,7 @@ const { authenticate, authenticateByCookie } = require('./middlewares/auth');
 
 //controllers
 const accessManagement = require('controllers/accessManagement');
+const users = require('controllers/users');
 
 // routes
 router.get('/', (_req, res) => res.send('Khao piyo aish karo mitron!'));
@@ -18,5 +19,7 @@ router
   .delete(authenticate, accessManagement.logOutUser);
 
 router.get('/v1/access-token', authenticateByCookie, accessManagement.issueAccessToken);
+
+router.route('/v1/users').get(authenticate, users.getUser);
 
 module.exports = router;
