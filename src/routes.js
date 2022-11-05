@@ -20,6 +20,6 @@ router
 
 router.get('/v1/access-token', authenticateByCookie, accessManagement.issueAccessToken);
 
-router.route('/v1/users').get(authenticate, users.getUser);
+router.route('/v1/users/:userId').get(authenticate, users.getUser);
 
 module.exports = router;

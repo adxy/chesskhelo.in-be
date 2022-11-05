@@ -6,7 +6,7 @@ const userService = require('services/users');
 
 module.exports = {
   getUser: async (req, res) => {
-    const userId = req.userId;
+    const { userId } = req.params;
 
     if (!(userId && isValidObjectId(userId))) {
       return res.failure({ msg: 'Invalid/Undefined userId' });

@@ -9,10 +9,10 @@ module.exports = {
         return {
           ok: true,
           data: {
+            userId,
             name: user.name,
             email: user.email,
             avatar: user.selectedAvatar,
-            settings: user.settings,
           },
         };
       }

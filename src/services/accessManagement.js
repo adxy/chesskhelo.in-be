@@ -37,7 +37,7 @@ const issueAccessToken = async ({ refreshToken }) => {
     });
 
     if (accessToken) {
-      return { ok: true, data: { token: accessToken, expiresIn } };
+      return { ok: true, data: { token: accessToken, expiresIn, userId: decodedToken.userId } };
     }
 
     return { ok: false, msg: 'Something went wrong, we are looking into it!' };
@@ -94,7 +94,7 @@ const logInUser = async ({ googleJwt }) => {
     ) {
       return {
         ok: true,
-        data: { accessToken: accessTokenResponse.data, refreshToken },
+        data: { accessToken: accessTokenResponse.data, refreshToken, userId },
       };
     }
 

@@ -12,12 +12,24 @@ module.exports = {
     try {
       const response = await accessManagementService.logInUser({ googleJwt });
 
-      if (response.ok && response.data && response.data.accessToken && response.data.refreshToken) {
+      if (
+        response.ok &&
+        response.data &&
+        response.data.accessToken &&
+        response.data.refreshToken &&
+        response.data.userId
+      ) {
         res.cookie('ck_refresh_token', response.data.refreshToken, {
           maxAge: 604800000,
           httpOnly: true,
         }); // maxAge - 1 week
-        return res.success({ data: response.data.accessToken });
+
+        const responseData = {
+          expiresIn: response.data.accessToken.expiresIn,
+          token: response.data.accessToken.token,
+          userId: response.data.userId,
+        };
+        return res.success({ data: responseData });
       }
 
       return res.failure({ msg: response.msg });
