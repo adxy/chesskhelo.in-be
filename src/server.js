@@ -71,7 +71,7 @@ const io = socketio(server, {
 io.use(socketsAuthorization);
 
 io.on('connection', (socket) => {
-  handleSocketEvents({ socket });
+  handleSocketEvents({ socket, io });
 });
 
 const shutdownCleanup = async (signal) => {
