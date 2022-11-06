@@ -15,12 +15,13 @@ const { handleSocketEvents } = require('services/socketEvents');
 const clsify = require('middlewares/clsify');
 const correlationIdBinder = require('middlewares/correlationIdBinder');
 const responseHandlers = require('middlewares/response');
-const { socketsAuthorization } = require('middlewares/auth.js');
+const { socketsAuthorization } = require('middlewares/auth');
 const routes = require('routes');
 
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line global-require
   const cors = require('utils/cors');
   app.use(cors);
 }
@@ -76,6 +77,7 @@ io.on('connection', (socket) => {
 
 const shutdownCleanup = async (signal) => {
   logger.info(`Received ${signal}, shutting down...`);
+  // eslint-disable-next-line no-promise-executor-return
   const loggerDone = new Promise((resolve) => winstonLogger.on('finish', resolve));
   winstonLogger.end();
 

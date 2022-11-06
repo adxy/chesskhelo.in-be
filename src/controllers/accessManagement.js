@@ -50,7 +50,7 @@ module.exports = {
   },
 
   issueAccessToken: async (req, res) => {
-    const refreshToken = req.refreshToken;
+    const { refreshToken } = req;
 
     if (!refreshToken) {
       return res.unauthorized({ msg: 'Missing or invalid Refresh Token' });

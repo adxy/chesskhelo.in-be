@@ -25,15 +25,15 @@ const gamesSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const gamesModel = mongoose.model('games', gamesSchema, 'games');
+const GamesModel = mongoose.model('games', gamesSchema, 'games');
 
 module.exports = {
-  findOne: async ({ query, projection }) => usersModel.findOne(query, projection).lean(),
+  findOne: async ({ query, projection }) => GamesModel.findOne(query, projection).lean(),
 
-  updateOne: async ({ query, updateDict }) => usersModel.updateOne(query, updateDict),
+  updateOne: async ({ query, updateDict }) => GamesModel.updateOne(query, updateDict),
 
   saveGame: async ({ pgn, wUserId, bUserId, offeredDraw, winner, result }) =>
-    new gamesModel({ pgn, wUserId, bUserId, offeredDraw, winner, result }).save(),
+    new GamesModel({ pgn, wUserId, bUserId, offeredDraw, winner, result }).save(),
 
-  getGameById: async ({ gameId }) => gamesModel.findOne({ _id: gameId }).lean(),
+  getGameById: async ({ gameId }) => GamesModel.findOne({ _id: gameId }).lean(),
 };

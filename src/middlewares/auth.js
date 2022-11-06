@@ -3,7 +3,6 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 const { parseCookie } = require('utils/commonFunctions');
-const { error } = require('utils/logger');
 
 module.exports = {
   authenticate: async (req, res, next) => {
@@ -15,7 +14,7 @@ module.exports = {
       const data = jwt.verify(accessToken, config.get('accessJwtSecret'));
       req.userId = data.userId;
       return next();
-    } catch {
+    } catch (e) {
       return res.unauthorized({});
     }
   },
@@ -36,16 +35,17 @@ module.exports = {
     }
   },
 
+  // eslint-disable-next-line no-undef
   socketsAuthorization: (async = (socket, next) => {
     const accessToken = socket.handshake.query.token;
     if (!accessToken) {
-      return res.unauthorized({});
+      return next(new Error('AccessToken Missing'));
     }
     try {
       jwt.verify(accessToken, config.get('accessJwtSecret'));
       return next();
-    } catch {
-      return res.unauthorized({});
+    } catch (e) {
+      return next(e);
     }
   }),
 };

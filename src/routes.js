@@ -1,12 +1,12 @@
 // node modules
 const router = require('express').Router();
 
-// Middlewares
-const { authenticate, authenticateByCookie } = require('./middlewares/auth');
-
-//controllers
+// controllers
 const accessManagement = require('controllers/accessManagement');
 const users = require('controllers/users');
+
+// Middlewares
+const { authenticate, authenticateByCookie } = require('middlewares/auth');
 
 // routes
 router.get('/', (_req, res) => res.send('Khao piyo aish karo mitron!'));

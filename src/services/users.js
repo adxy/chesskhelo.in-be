@@ -1,4 +1,5 @@
 const { getUserById } = require('models/users');
+const { error } = require('utils/logger');
 
 module.exports = {
   getUser: async ({ userId }) => {

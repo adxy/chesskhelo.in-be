@@ -13,15 +13,15 @@ const usersSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const usersModel = mongoose.model('users', usersSchema, 'users');
+const UsersModel = mongoose.model('users', usersSchema, 'users');
 
 module.exports = {
-  findOne: async ({ query, projection }) => usersModel.findOne(query, projection).lean(),
+  findOne: async ({ query, projection }) => UsersModel.findOne(query, projection).lean(),
 
-  updateOne: async ({ query, updateDict }) => usersModel.updateOne(query, updateDict),
+  updateOne: async ({ query, updateDict }) => UsersModel.updateOne(query, updateDict),
 
   createUser: async ({ name, email, avatar, socialId, signInPlatform }) =>
-    new usersModel({
+    new UsersModel({
       name,
       email,
       avatar,
@@ -30,11 +30,11 @@ module.exports = {
       signInPlatform,
     }).save(),
 
-  getUserById: async ({ userId }) => usersModel.findOne({ _id: userId }).lean(),
+  getUserById: async ({ userId }) => UsersModel.findOne({ _id: userId }).lean(),
 
   getUserBySocialId: async ({ socialUserId }) =>
-    usersModel.findOne({ socialId: socialUserId }, { name: 1, email: 1, avatar: 1 }).lean(),
+    UsersModel.findOne({ socialId: socialUserId }, { name: 1, email: 1, avatar: 1 }).lean(),
 
   updateSelectedAvatar: async ({ selectedAvatar }) =>
-    usersModel.updateOne({ selectedAvatar }, { $set: { selectedAvatar: selectedAvatar } }),
+    UsersModel.updateOne({ selectedAvatar }, { $set: { selectedAvatar } }),
 };
