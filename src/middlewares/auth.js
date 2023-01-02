@@ -20,12 +20,17 @@ module.exports = {
   },
 
   authenticateByCookie: async (req, res, next) => {
-    const { ck_refresh_token: refreshToken } = parseCookie({ cookieString: req.headers.cookie });
-
-    if (!refreshToken) {
-      return res.unauthorized({});
-    }
     try {
+      const cookieString = req.headers.cookie;
+      if (!cookieString) {
+        return res.unauthorized({});
+      }
+
+      const { ck_refresh_token: refreshToken } = parseCookie({ cookieString });
+
+      if (!refreshToken) {
+        return res.unauthorized({});
+      }
       const data = jwt.verify(refreshToken, config.get('refreshJwtSecret'));
       req.userId = data.userId;
       req.refreshToken = refreshToken;
