@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const shortId = require('shortid');
 
 const Chess = require('utils/moveValidation');
 const gamesModel = require('models/games');
@@ -209,7 +209,7 @@ const message = ({ userId, gameId, type, text }, socket, io) => {
 const createNewGame = ({ userId, color }, socket, io) => {
   try {
     const chess = new Chess();
-    const gameId = uuidv4();
+    const gameId = shortId.generate();
     gameData.set(gameId, {
       pgn: chess.pgn(),
       wUserId: color === 'w' ? userId : undefined,

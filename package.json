@@ -25,8 +25,8 @@
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.37",
     "mongoose": "^6.5.4",
+    "shortid": "^2.2.16",
     "socket.io": "^4.5.2",
-    "uuid": "^9.0.0",
     "verror": "^1.10.1",
     "winston": "^3.8.1",
     "winston-daily-rotate-file": "^4.7.1"
